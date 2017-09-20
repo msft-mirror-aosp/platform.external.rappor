@@ -1,4 +1,4 @@
-package com.google.rappor;
+package com.google.android.rappor;
 
 // BEGIN android-changed: Removed guava dependency
 // import com.google.common.hash.HashFunction;

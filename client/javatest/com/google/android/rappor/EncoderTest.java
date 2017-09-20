@@ -1,4 +1,4 @@
-package com.google.rappor;
+package com.google.android.rappor;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;

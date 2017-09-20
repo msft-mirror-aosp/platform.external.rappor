@@ -1,4 +1,4 @@
-package com.google.rappor;
+package com.google.android.rappor;
 
 // BEGIN android-changed: Removed guava dependency
 // import static com.google.common.base.Preconditions.checkArgument;
@@ -13,8 +13,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.BitSet;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
+// BEGIN android-changed: Remove javax
+// import javax.annotation.Nullable;
+// import javax.annotation.concurrent.GuardedBy;
+// END android-changed
 
 /**
  * Encodes reports using the RAPPOR differentially-private encoding algorithm.
@@ -163,7 +165,9 @@ public class Encoder {
    * <p>This object is stateful; access must be synchronized.  The reset method must be
    * called before each use.
    */
-  @GuardedBy("this")
+// BEGIN android-changed: Remove javax
+//  @GuardedBy("this")
+// END android-changed
   private final MessageDigest sha256;
 
   /**
@@ -172,7 +176,9 @@ public class Encoder {
    * <p>This object is stateful; access must be synchronized.  The reset method must be
    * called before each use.
    */
-  @GuardedBy("this")
+// BEGIN android-changed: Remove javax
+//  @GuardedBy("this")
+// END android-changed
   private final MessageDigest md5;
 
   /**
@@ -248,9 +254,14 @@ public class Encoder {
    *     string.
    */
   public Encoder(
-      @Nullable SecureRandom random,
-      @Nullable MessageDigest md5,
-      @Nullable MessageDigest sha256,
+// BEGIN android-changed: Remove javax
+//      @Nullable SecureRandom random,
+//      @Nullable MessageDigest md5,
+//      @Nullable MessageDigest sha256,
+      SecureRandom random,
+      MessageDigest md5,
+      MessageDigest sha256,
+// END android-changed
       byte[] userSecret,
       String encoderId,
       int numBits,
@@ -580,7 +591,7 @@ public class Encoder {
   }
 
   // BEGIN android-changed: Added guava methods
-  private static void checkArgument(boolean expression, @Nullable Object errorMessage) {
+  private static void checkArgument(boolean expression, Object errorMessage) {
     if (!expression) {
       throw new IllegalArgumentException(String.valueOf(errorMessage));
     }
