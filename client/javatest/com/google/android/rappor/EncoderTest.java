@@ -16,7 +16,10 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.SecureRandom;
+// BEGIN android-changed
+// import java.security.SecureRandom;
+import java.util.Random;
+// END android-changed
 
 /**
  * Unit tests for {@link Encoder}.
@@ -703,7 +706,10 @@ public class EncoderTest {
     double probabilityQ = 0.85;
     long inputValue = 0b11111101L;
 
-    SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+    Random random = new Random();
+// END android-changed
     random.setSeed(0x12345678L);
 
     int counts[] = new int[64];
@@ -730,14 +736,24 @@ public class EncoderTest {
       }
     }
 
-    assertEquals(8481, counts[0]);  // input = 1, 99.99% CI = [8358, 8636]
-    assertEquals(2477, counts[1]);  // input = 0, 99.99% CI = [2332, 2669]
-    assertEquals(8486, counts[2]);  // input = 1, 99.99% CI = [8358, 8636]
-    assertEquals(8495, counts[3]);  // input = 1, 99.99% CI = [8358, 8636]
-    assertEquals(8563, counts[4]);  // input = 1, 99.99% CI = [8358, 8636]
-    assertEquals(8560, counts[5]);  // input = 1, 99.99% CI = [8358, 8636]
-    assertEquals(8481, counts[6]);  // input = 1, 99.99% CI = [8358, 8636]
-    assertEquals(8491, counts[7]);  // input = 1, 99.99% CI = [8358, 8636]
+// BEGIN android-changed
+//    assertEquals(8481, counts[0]);  // input = 1, 99.99% CI = [8358, 8636]
+//    assertEquals(2477, counts[1]);  // input = 0, 99.99% CI = [2332, 2669]
+//    assertEquals(8486, counts[2]);  // input = 1, 99.99% CI = [8358, 8636]
+//    assertEquals(8495, counts[3]);  // input = 1, 99.99% CI = [8358, 8636]
+//    assertEquals(8563, counts[4]);  // input = 1, 99.99% CI = [8358, 8636]
+//    assertEquals(8560, counts[5]);  // input = 1, 99.99% CI = [8358, 8636]
+//    assertEquals(8481, counts[6]);  // input = 1, 99.99% CI = [8358, 8636]
+//    assertEquals(8491, counts[7]);  // input = 1, 99.99% CI = [8358, 8636]
+    assertEquals(8492, counts[0]);  // input = 1, 99.99% CI = [8358, 8636]
+    assertEquals(2510, counts[1]);  // input = 0, 99.99% CI = [2332, 2669]
+    assertEquals(8476, counts[2]);  // input = 1, 99.99% CI = [8358, 8636]
+    assertEquals(8509, counts[3]);  // input = 1, 99.99% CI = [8358, 8636]
+    assertEquals(8406, counts[4]);  // input = 1, 99.99% CI = [8358, 8636]
+    assertEquals(8482, counts[5]);  // input = 1, 99.99% CI = [8358, 8636]
+    assertEquals(8498, counts[6]);  // input = 1, 99.99% CI = [8358, 8636]
+    assertEquals(8533, counts[7]);  // input = 1, 99.99% CI = [8358, 8636]
+// END android-changed
 
     // Check that no high-order bit past numBits ever got set.
     for (int iBit = numBits; iBit < 64; iBit++) {
@@ -751,7 +767,10 @@ public class EncoderTest {
 
     long inputValue = 0b11111101L;
     long prrValue = 0b01110101L;
-    long prrAndIrrValue = 0b01110110L;
+// BEGIN android-changed
+//    long prrAndIrrValue = 0b01110110L;
+    long prrAndIrrValue = 0b00111101L;
+// END android-changed
 
     // Verify that PRR is working as expected.
     assertEquals(
@@ -772,7 +791,10 @@ public class EncoderTest {
                 .encodeBits(toBytes(inputValue))));
 
     // Verify that IRR is working as expected.
-    SecureRandom random1 = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    SecureRandom random1 = SecureRandom.getInstance("SHA1PRNG");
+    Random random1 = new Random();
+// END android-changed
     random1.setSeed(0x12345678L);
     assertEquals(
         prrAndIrrValue,
@@ -792,7 +814,10 @@ public class EncoderTest {
                 .encodeBits(toBytes(prrValue))));
 
     // Test that end-to-end is the result of PRR + IRR.
-    SecureRandom random2 = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    SecureRandom random2 = SecureRandom.getInstance("SHA1PRNG");
+    Random random2 = new Random();
+// END android-changed
     random2.setSeed(0x12345678L);
     assertEquals(
         prrAndIrrValue,
@@ -820,8 +845,12 @@ public class EncoderTest {
 
     // Explicitly spot-check the output for 2^0 and 2^31.
     long inputValue0 = 1L;
-    long outputValue0 = 590349342L;
-    SecureRandom random0 = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    long outputValue0 = 590349342L;
+//    SecureRandom random0 = SecureRandom.getInstance("SHA1PRNG");
+    long outputValue0 = 1117977L;
+    Random random0 = new Random();
+// END android-changed
     random0.setSeed(0x12345678L);
     assertEquals(
         outputValue0,
@@ -841,8 +870,12 @@ public class EncoderTest {
                 .encodeBits(toBytes(inputValue0))));
 
     long inputValue31 = 1L << 31;
-    long outputValue31 = 2746482838L;
-    SecureRandom random31 = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    long outputValue31 = 2746482838L;
+//    SecureRandom random31 = SecureRandom.getInstance("SHA1PRNG");
+    long outputValue31 = 9505692L;
+    Random random31 = new Random();
+// END android-changed
     random31.setSeed(0x12345678L);
     assertEquals(
         outputValue31,
@@ -862,7 +895,10 @@ public class EncoderTest {
                 .encodeBits(toBytes(inputValue31))));
 
     // Check the range 2^1 to 2^30, making sure no values produce exceptions.
-    SecureRandom randomRange = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    SecureRandom randomRange = SecureRandom.getInstance("SHA1PRNG");
+    Random randomRange = new Random();
+// END android-changed
     randomRange.setSeed(0x12345678L);
     for (int i = 1; i <= 30; i++) {
       long inputValue = 1L << (i - 1);
@@ -889,8 +925,12 @@ public class EncoderTest {
 
     // Explicitly spot-check the output for 2^0 and 2^63.
     long inputValue0 = 1L;
-    long outputValue0 = 867402030798341150L;
-    SecureRandom random0 = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    long outputValue0 = 867402030798341150L;
+//    SecureRandom random0 = SecureRandom.getInstance("SHA1PRNG");
+    long outputValue0 = 5802301002133606169L;
+    Random random0 = new Random();
+// END android-changed
     random0.setSeed(0x12345678L);
     assertEquals(
         outputValue0,
@@ -910,8 +950,12 @@ public class EncoderTest {
                 .encodeBits(toBytes(inputValue0))));
 
     long inputValue63 = 1L << 62;
-    long outputValue63 = 5497102447743615126L;
-    SecureRandom random63 = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    long outputValue63 = 5497102447743615126L;
+//    SecureRandom random63 = SecureRandom.getInstance("SHA1PRNG");
+    long outputValue63 = 5874921546135456664L;
+    Random random63 = new Random();
+// END android-changed
     random63.setSeed(0x12345678L);
     assertEquals(
         outputValue63,
@@ -931,7 +975,10 @@ public class EncoderTest {
                 .encodeBits(toBytes(inputValue63))));
 
     // Check the range 2^1 to 2^62, making sure no values produce exceptions.
-    SecureRandom randomRange = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    SecureRandom randomRange = SecureRandom.getInstance("SHA1PRNG");
+    Random randomRange = new Random();
+// END android-changed
     randomRange.setSeed(0x12345678L);
     for (int i = 1; i <= 62; i++) {
       long inputValue = 1L << (i - 1);
@@ -957,7 +1004,10 @@ public class EncoderTest {
     byte[] userSecret = makeTestingUserSecret("Bar");
 
     // Check the range 2^1 to 2^4095, making sure no values produce exceptions.
-    SecureRandom randomRange = SecureRandom.getInstance("SHA1PRNG");
+// BEGIN android-changed
+//    SecureRandom randomRange = SecureRandom.getInstance("SHA1PRNG");
+    Random randomRange = new Random();
+// END android-changed
     randomRange.setSeed(0x12345678L);
     // Stride is arbitrary, but chosen to be large enough to not cause too many probes (~40) and
     // prime to explore well.

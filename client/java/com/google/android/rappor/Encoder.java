@@ -12,6 +12,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.BitSet;
+// BEGIN android-changed
+import java.util.Random;
+// END android-changed
 
 // BEGIN android-changed: Remove javax
 // import javax.annotation.Nullable;
@@ -184,7 +187,10 @@ public class Encoder {
   /**
    * A SecureRandom instance, initialized with a cryptographically secure random seed.
    */
-  private final SecureRandom random;
+// BEGIN android-changed
+//  private final SecureRandom random;
+  private final Random random;
+// BEGIN android-changed
 
   /**
    * Entropy input for constructing HmacDrbg objects.
@@ -258,7 +264,8 @@ public class Encoder {
 //      @Nullable SecureRandom random,
 //      @Nullable MessageDigest md5,
 //      @Nullable MessageDigest sha256,
-      SecureRandom random,
+//      SecureRandom random,
+      Random random,
       MessageDigest md5,
       MessageDigest sha256,
 // END android-changed
