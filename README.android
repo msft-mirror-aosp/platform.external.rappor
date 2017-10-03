@@ -8,4 +8,6 @@ here:
 - Removed all non-java client library files.
 
 - Modified client/java/com/google/rappor/HmacDrbg.java, client/java/com/google/rappor/Encoder.java
-  to remove Guava dependency.
+  to remove Guava, javax dependency.
+
+- Moved package from com.google.rappor.* to com.google.android.rappor.* to avoid source conflict with 3rd party library.

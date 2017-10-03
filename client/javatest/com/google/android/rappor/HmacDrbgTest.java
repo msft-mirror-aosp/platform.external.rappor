@@ -1,4 +1,4 @@
-package com.google.rappor;
+package com.google.android.rappor;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

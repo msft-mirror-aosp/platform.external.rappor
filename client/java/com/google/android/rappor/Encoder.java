@@ -1,4 +1,4 @@
-package com.google.rappor;
+package com.google.android.rappor;
 
 // BEGIN android-changed: Removed guava dependency
 // import static com.google.common.base.Preconditions.checkArgument;
@@ -12,9 +12,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.BitSet;
+// BEGIN android-changed
+import java.util.Random;
+// END android-changed
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
+// BEGIN android-changed: Remove javax
+// import javax.annotation.Nullable;
+// import javax.annotation.concurrent.GuardedBy;
+// END android-changed
 
 /**
  * Encodes reports using the RAPPOR differentially-private encoding algorithm.
@@ -163,7 +168,9 @@ public class Encoder {
    * <p>This object is stateful; access must be synchronized.  The reset method must be
    * called before each use.
    */
-  @GuardedBy("this")
+// BEGIN android-changed: Remove javax
+//  @GuardedBy("this")
+// END android-changed
   private final MessageDigest sha256;
 
   /**
@@ -172,13 +179,18 @@ public class Encoder {
    * <p>This object is stateful; access must be synchronized.  The reset method must be
    * called before each use.
    */
-  @GuardedBy("this")
+// BEGIN android-changed: Remove javax
+//  @GuardedBy("this")
+// END android-changed
   private final MessageDigest md5;
 
   /**
    * A SecureRandom instance, initialized with a cryptographically secure random seed.
    */
-  private final SecureRandom random;
+// BEGIN android-changed
+//  private final SecureRandom random;
+  private final Random random;
+// BEGIN android-changed
 
   /**
    * Entropy input for constructing HmacDrbg objects.
@@ -248,9 +260,15 @@ public class Encoder {
    *     string.
    */
   public Encoder(
-      @Nullable SecureRandom random,
-      @Nullable MessageDigest md5,
-      @Nullable MessageDigest sha256,
+// BEGIN android-changed: Remove javax
+//      @Nullable SecureRandom random,
+//      @Nullable MessageDigest md5,
+//      @Nullable MessageDigest sha256,
+//      SecureRandom random,
+      Random random,
+      MessageDigest md5,
+      MessageDigest sha256,
+// END android-changed
       byte[] userSecret,
       String encoderId,
       int numBits,
@@ -580,7 +598,7 @@ public class Encoder {
   }
 
   // BEGIN android-changed: Added guava methods
-  private static void checkArgument(boolean expression, @Nullable Object errorMessage) {
+  private static void checkArgument(boolean expression, Object errorMessage) {
     if (!expression) {
       throw new IllegalArgumentException(String.valueOf(errorMessage));
     }

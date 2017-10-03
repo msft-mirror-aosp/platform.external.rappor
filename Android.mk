@@ -21,5 +21,14 @@ LOCAL_NO_STANDARD_LIBRARIES := true
 LOCAL_JAVA_LANGUAGE_VERSION := 1.7
 LOCAL_JAVA_LIBRARIES := core-oj jsr305
 LOCAL_SRC_FILES := $(call all-java-files-under, client/java)
+include $(BUILD_STATIC_JAVA_LIBRARY)
 
-include $(BUILD_JAVA_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := rappor-tests
+LOCAL_NO_STANDARD_LIBRARIES := true
+LOCAL_JAVA_LANGUAGE_VERSION := 1.7
+LOCAL_STATIC_JAVA_LIBRARIES := hamcrest-library rappor guava junit
+LOCAL_JAVA_LIBRARIES := core-oj jsr305
+LOCAL_SRC_FILES := $(call all-java-files-under, client/javatest)
+include $(BUILD_STATIC_JAVA_LIBRARY)
