@@ -18,8 +18,8 @@ java_library_static {
     name: "rappor",
     no_framework_libs: true,
     java_version: "1.7",
+    sdk_version: "core_current",
     libs: [
-        "core-oj",
         "jsr305",
     ],
     srcs: ["client/java/**/*.java"],
